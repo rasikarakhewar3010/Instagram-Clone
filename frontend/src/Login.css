@@ -1,0 +1,163 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #fff;
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* Content Styling */
+.content {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Box 1 Styling */
+.box1 {
+    width: 350px;
+    height: 410px;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border: 1px solid rgb(219, 219, 219);
+    display: flex;
+    justify-content: center;
+}
+
+/* Logo Styling */
+.logo {
+    font-family: 'Pacifico', cursive; /* Pacifico is a close alternative to Billabong */
+    font-size: 36px;
+    font-weight: normal;
+    margin: 20px;
+}
+
+/* Login Form Styling */
+.login-form {
+    margin-top: 40px;
+}
+
+.login-form form input {
+    width: 268px;
+    height: 25px;
+    padding: 9px 8px 7px;
+    background-color: #FAFAFA;
+    font-size: 14px;
+    border: 1px solid rgb(219, 219, 219);
+    border-radius: 3px;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0095f6;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.login-container button:hover {
+    background-color: #007acc;
+}
+
+/* Separator Styling */
+.login-form .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0;
+    color: #737373;
+}
+
+.login-form .separator::before,
+.login-form .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.login-form .separator::before {
+    margin-right: 10px;
+}
+
+.login-form .separator::after {
+    margin-left: 10px;
+}
+
+/* Facebook Login Styling */
+.login-form .facebook-login {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}
+
+.login-form .facebook-login img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.login-form .facebook-login a {
+    color: #0095f6;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.facebook-login a span:hover {
+    color: #00376b;
+}
+
+/* Forgot Password Styling */
+.forgot-password {
+    margin-top: 15px;
+    color: #00376b;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+}
+
+/* Box 2 Styling */
+.box2 {
+    width: 350px;
+    height: 3.9rem;
+    border: 1px solid rgb(219, 219, 219);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Get App Styling */
+.get-app {
+    margin: 15px;
+}
+
+.box2-content a {
+    text-decoration: none;
+}
+
+/* Images Styling */
+.imgs {
+    width: 350px;
+    height: 40px;
+    padding: 0 20px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.img img {
+    height: 40px;
+}
