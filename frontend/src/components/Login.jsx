@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import '../Login.css'
-import '../Signup.css'
 import axios from "axios";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Login = () => {
   const [input, setInput] = useState({
-    username:'',
     email:'',
     password:''
   });
 
   const [loading , setLoading]= useState(false);
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -26,17 +24,16 @@ const Signup = () => {
     console.log(input);
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v1/user/register', input ,{
+      const res = await axios.post('http://localhost:8000/api/v1/user/login', input ,{
         headers:{
           'Content-Type':'application/json'
         },
         withCredentials:true
       });
       if(res.data.success){
-        navigate("/login")
+        navigate("/")
         toast.success(res.data.message);
         setInput({
-          username:'',
           email:'',
           password:''
         });
@@ -70,14 +67,6 @@ const Signup = () => {
                 <form onSubmit={signupHandler} method="post">
                   <input
                     type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Username"
-                    value={input.username}
-                    onChange={changeEventHandler}
-                  />
-                  <input
-                    type="text"
                     name="email"
                     id="email"
                     placeholder="Enter email"
@@ -99,7 +88,7 @@ const Signup = () => {
                         Please wait
                       </Button>
                     ) : (
-                      <button type="submit">Signup</button>
+                      <button type="submit">Login</button>
                     )
                   }
                 </form>
@@ -110,9 +99,9 @@ const Signup = () => {
           <div className="box2">
             <div className="box2-content">
               <p>
-                Have an account?
-                <a href="/login">
-                  <span style={{ color: "#0095f6" }}> <a href="/login">Login</a></span>
+              Dont have an account? 
+                <a href="/signup">
+                  <span style={{ color: "#0095f6" }}>Sig up</span>
                 </a>
               </p>
             </div>
@@ -125,4 +114,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

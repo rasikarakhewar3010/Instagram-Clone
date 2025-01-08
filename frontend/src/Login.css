@@ -1,3 +1,7 @@
+/* In your CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
 /* General Reset */
 * {
     margin: 0;
@@ -15,12 +19,13 @@ body {
 }
 
 /* Content Styling */
-.content {
+.content-box {
     margin: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* box-shadow: 2px 6px 16px rgb(103, 102, 102); */
 }
 
 /* Box 1 Styling */
@@ -34,12 +39,19 @@ body {
     justify-content: center;
 }
 
+.to-center{
+    margin: 10px 15px;
+    display: flex;
+    justify-content: center;    
+}
+
 /* Logo Styling */
 .logo {
     font-family: 'Pacifico', cursive; /* Pacifico is a close alternative to Billabong */
     font-size: 36px;
     font-weight: normal;
     margin: 20px;
+    text-align: center;
 }
 
 /* Login Form Styling */
@@ -47,20 +59,21 @@ body {
     margin-top: 40px;
 }
 
-.login-form form input {
-    width: 268px;
-    height: 25px;
+.login-form form input, #email,#username , #password {
+    width: 318px;
+    height: 38px;
     padding: 9px 8px 7px;
     background-color: #FAFAFA;
     font-size: 14px;
     border: 1px solid rgb(219, 219, 219);
     border-radius: 3px;
+    margin-bottom: 15px;
 }
 
 .login-form button {
     width: 100%;
     padding: 10px;
-    background-color: #0095f6;
+    background-color: #0094f6d2;
     color: white;
     font-weight: bold;
     border: none;
