@@ -5,7 +5,40 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../logo.css"
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthUser } from "@/redux/authSlice";
+import { useState } from "react";
+import CreatePost from "./CreatePost";
 
+const LeftSidebar = () => {
+    const navigate = useNavigate();
+    const {user} = useSelector(store=>store.auth);
+    const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
+
+    const logoutHandler = async () => {
+        try {
+            const res = await axios.get('http://localhost:8000/api/v1/user/logout', { withCredentials: true });
+            if (res.data.success) {
+              dispatch(setAuthUser(null));
+                navigate("/login");
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response?.data?.message || "Logout failed");
+        }
+    };
+   
+    const sidebarHandler= (textType) =>{
+        if(textType === 'Logout') {logoutHandler();}
+        else if( textType === 'Create'){
+          setOpen(true);
+        }
+
+    }
+
+    
 const sidebarItems = [
   { icon: <Home />, text: "Home" },
   { icon: <Search />, text: "Search" },
@@ -16,7 +49,7 @@ const sidebarItems = [
   {
     icon: (
       <Avatar className="w-6 h-6 rounded ">
-        <AvatarImage src="https://avatars.githubusercontent.com/u/124599?v=4" alt="Profile" className="rounded-full"/>
+        <AvatarImage src="{user..profilePicture}" alt="Profile" className="rounded-full"/>
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     ),
@@ -25,26 +58,7 @@ const sidebarItems = [
   { icon: <LogOut />, text: "Logout" },
 ];
 
-const LeftSidebar = () => {
-    const navigate = useNavigate();
-    const logoutHandler = async () => {
-        console.log("Logout handler called");
-        try {
-            const res = await axios.get('http://localhost:8000/api/v1/user/logout', { withCredentials: true });
-            console.log("Server response:", res.data);
-            if (res.data.success) {
-                navigate("/login");
-                toast.success(res.data.message);
-            }
-        } catch (error) {
-            console.error(error);
-            toast.error(error.response?.data?.message || "Logout failed");
-        }
-    };
-    
-    const sidebarHandler= (textType) =>{
-        if(textType === 'Logout') logoutHandler();
-    }
+
   return (
     <div className="fixed top-0 z-10 left-0 px-4 border-r border-gray-300 w-[16%] h-screen">
       <div className="flex flex-col">
@@ -58,7 +72,10 @@ const LeftSidebar = () => {
       ))}
         </div>
       </div>
+      <CreatePost open={open} setOpen={setOpen}/>
+
     </div>
+
   );
 };
 
