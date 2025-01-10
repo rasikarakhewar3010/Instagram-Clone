@@ -3,12 +3,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
+import axios from "axios";
+import { toast } from "sonner";
+import { setPosts } from "@/redux/postSlice";
 
 const CommentDialog = ({ open, setopen }) => {
     const [text, setText] = useState("");
-    const { selectedPost } = useSelector((store) => store.post);
+    const { selectedPost, posts } = useSelector((store) => store.post);
+    const [comment, setComment] = useState(selectedPost?.comments);
+    const dispatch = useDispatch();
 
     const changeEventHandler = (e) => {
         const inputText = e.target.value;
@@ -16,9 +21,30 @@ const CommentDialog = ({ open, setopen }) => {
     };
 
     const sendMessageHandler = async () => {
-        alert(text);
-        setText(""); // Clear the input after sending the message
-    };
+
+        try {
+            const res = await axios.post(`http://localhost:8000/api/v1/post/${selectedPost?._id}/comment`, { text }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
+
+            if (res.data.success) {
+                const updatedCommentData = [...comment, res.data.comment];
+                setComment(updatedCommentData);
+
+                const updatedPostData = posts.map(p =>
+                    p._id === selectedPost._id ? { ...p, comments: updatedCommentData } : p
+                );
+                dispatch(setPosts(updatedPostData));
+                toast.success(res.data.message);
+                setText("");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <Dialog open={open}>
@@ -69,9 +95,9 @@ const CommentDialog = ({ open, setopen }) => {
 
                         {/* Comments Section */}
                         <div className="flex-1 overflow-y-auto px-4 py-3 bg-white">
-                            {selectedPost?.comments.map((comment) => (
-                                <Comment key={comment._id} comment={comment} />
-                            ))}
+                            {
+                                comment.map((comment) => <Comment key={comment._id} comment={comment} />)
+                            }
                         </div>
 
                         {/* Add Comment */}
@@ -87,11 +113,10 @@ const CommentDialog = ({ open, setopen }) => {
                                 <Button
                                     disabled={!text.trim()}
                                     onClick={sendMessageHandler}
-                                    className={`text-sm font-semibold ${
-                                        text.trim()
+                                    className={`text-sm font-semibold ${text.trim()
                                             ? "text-blue-500 cursor-pointer"
                                             : "text-gray-400 cursor-not-allowed"
-                                    }`}
+                                        }`}
                                 >
                                     Post
                                 </Button>
