@@ -55,6 +55,8 @@ const CreatePost = ({ open, setOpen }) => {
             setLoading(false);
         }
     }
+
+   
     return (
         <Dialog open={open} className="bg-white">
             <DialogContent onInteractOutside={() => setOpen(false)}>
