@@ -2,7 +2,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
 import axios from "axios";
@@ -12,8 +12,14 @@ import { setPosts } from "@/redux/postSlice";
 const CommentDialog = ({ open, setopen }) => {
     const [text, setText] = useState("");
     const { selectedPost, posts } = useSelector((store) => store.post);
-    const [comment, setComment] = useState(selectedPost?.comments);
+    const [comment, setComment] = useState([]);
     const dispatch = useDispatch();
+
+    useEffect(()=>{
+        if(selectedPost){
+            setComment(selectedPost.comments);
+        }
+    },[selectedPost])
 
     const changeEventHandler = (e) => {
         const inputText = e.target.value;
