@@ -10,42 +10,42 @@ import { setAuthUser } from "@/redux/authSlice";
 
 const Login = () => {
   const [input, setInput] = useState({
-    email:'',
-    password:''
+    email: '',
+    password: ''
   });
 
-  const [loading , setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  
 
-  const signupHandler = async (e) =>{
+
+  const signupHandler = async (e) => {
     e.preventDefault();
     console.log(input);
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v1/user/login', input ,{
-        headers:{
-          'Content-Type':'application/json'
+      const res = await axios.post('http://localhost:8000/api/v1/user/login', input, {
+        headers: {
+          'Content-Type': 'application/json'
         },
-        withCredentials:true
+        withCredentials: true
       });
-      if(res.data.success){
+      if (res.data.success) {
         dispatch(setAuthUser(res.data.user))
         navigate("/")
         toast.success(res.data.message);
         setInput({
-          email:'',
-          password:''
+          email: '',
+          password: ''
         });
       }
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-    } finally{
+    } finally {
       setLoading(false);
     }
   }
@@ -76,7 +76,9 @@ const Login = () => {
                     placeholder="Enter email"
                     value={input.email}
                     onChange={changeEventHandler}
+                    className="focus:outline-none focus:ring-0 focus:border-transparent"
                   />
+
                   <input
                     type="password"
                     name="password"
@@ -84,11 +86,12 @@ const Login = () => {
                     placeholder="Password"
                     value={input.password}
                     onChange={changeEventHandler}
+                    className="focus:outline-none focus:ring-0 focus:border-transparent"
                   />
                   {
                     loading ? (
                       <Button>
-                        <Loader2 className="mr-2 h-4 w-3 w-4 animate-spin"/>
+                        <Loader2 className="mr-2 h-4 w-3 w-4 animate-spin" />
                         Please wait
                       </Button>
                     ) : (
@@ -103,7 +106,7 @@ const Login = () => {
           <div className="box2">
             <div className="box2-content">
               <p>
-              Dont have an account? 
+                Dont have an account?
                 <a href="/signup">
                   <span style={{ color: "#0095f6" }}>Sig up</span>
                 </a>
@@ -111,7 +114,7 @@ const Login = () => {
             </div>
           </div>
 
-          
+
         </div>
       </div>
     </>

@@ -36,6 +36,8 @@ const LeftSidebar = () => {
       setOpen(true);
     } else if (textType === 'Profile') {
       navigate(`/profile/${user?._id}`)
+    } else if (textType === 'Home') {
+      navigate('/');
     }
 
   }
@@ -51,7 +53,7 @@ const LeftSidebar = () => {
     {
       icon: (
         <Avatar className="w-6 h-6 rounded ">
-          <AvatarImage src="{user..profilePicture}" alt="Profile" className="rounded-full" />
+          <AvatarImage src={user.profilePicture} alt="Profile" className="rounded-full" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ),

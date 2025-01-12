@@ -31,7 +31,7 @@ const Profile = () => {
           <section className='flex items-center justify-center'>
             <Avatar className='h-32 w-32'>
               <AvatarImage src={userProfile?.profilePicture} alt="profilephoto" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback className="text-white">CN</AvatarFallback>
             </Avatar>
           </section>
           <section>
@@ -43,7 +43,7 @@ const Profile = () => {
                     <>
                       <Link to="/account/edit"><Button variant='secondary' className='hover:bg-gray-200 h-8'>Edit profile</Button></Link>
                       <Button variant='secondary' className='hover:bg-gray-200 h-8'>View archive</Button>
-                      <Button variant='secondary' className='hover:bg-gray-200 h-8'>Ad tools</Button>
+                      <Button variant='secondary' className='hover:bg-gray-200 h-8'>Add tools</Button>
                     </>
                   ) : (
                     isFollowing ? (
@@ -65,9 +65,12 @@ const Profile = () => {
               <div className='flex flex-col gap-1'>
                 <span className='font-semibold'>{userProfile?.bio || 'bio here...'}</span>
                 <Badge className='w-fit' variant='secondary'><AtSign /> <span className='pl-1'>{userProfile?.username}</span> </Badge>
-                <span>🤯Learn code with patel mernstack style</span>
+                {/* <span>🤯Learn code with patel mernstack style</span>
                 <span>🤯Turing code into fun</span>
-                <span>🤯DM for collaboration</span>
+                <span>🤯DM for collaboration</span> */}
+                <br />
+                <br />
+                <br />
               </div>
             </div>
           </section>
@@ -112,4 +115,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Profile;

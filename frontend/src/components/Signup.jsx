@@ -75,6 +75,7 @@ const Signup = () => {
                     placeholder="Username"
                     value={input.username}
                     onChange={changeEventHandler}
+                    className="focus:outline-none focus:ring-0 focus:border-transparent"
                   />
                   <input
                     type="text"
@@ -83,6 +84,7 @@ const Signup = () => {
                     placeholder="Enter email"
                     value={input.email}
                     onChange={changeEventHandler}
+                    className="focus:outline-none focus:ring-0 focus:border-transparent"
                   />
                   <input
                     type="password"
@@ -91,6 +93,7 @@ const Signup = () => {
                     placeholder="Password"
                     value={input.password}
                     onChange={changeEventHandler}
+                    className="focus:outline-none focus:ring-0 focus:border-transparent"
                   />
                   {
                     loading ? (
