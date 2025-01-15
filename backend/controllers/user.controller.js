@@ -165,41 +165,31 @@ export const getSuggestedUsers = async (req, res) => {
 };
 export const followOrUnfollow = async (req, res) => {
     try {
-        const followKrneWala = req.id;
-        const jiskoFollowKrunga = req.params.id; 
-        if (followKrneWala === jiskoFollowKrunga) {
-            return res.status(400).json({
-                message: 'You cannot follow/unfollow yourself',
-                success: false
-            });
-        }
-
-        const user = await User.findById(followKrneWala);
-        const targetUser = await User.findById(jiskoFollowKrunga);
-
-        if (!user || !targetUser) {
-            return res.status(400).json({
-                message: 'User not found',
-                success: false
-            });
-        }
-        const isFollowing = user.following.includes(jiskoFollowKrunga);
-        if (isFollowing) {
-
-            await Promise.all([
-                User.updateOne({ _id: followKrneWala }, { $pull: { following: jiskoFollowKrunga } }),
-                User.updateOne({ _id: jiskoFollowKrunga }, { $pull: { followers: followKrneWala } }),
-            ])
-            return res.status(200).json({ message: 'Unfollowed successfully', success: true });
-        } else {
-            // follow logic ayega
-            await Promise.all([
-                User.updateOne({ _id: followKrneWala }, { $push: { following: jiskoFollowKrunga } }),
-                User.updateOne({ _id: jiskoFollowKrunga }, { $push: { followers: followKrneWala } }),
-            ])
-            return res.status(200).json({ message: 'followed successfully', success: true });
-        }
-    } catch (error) {
-        console.log(error);
+      console.log("Authenticated user:", req.user); // Log authenticated user details
+      const { id } = req.params;
+  
+      const userToFollow = await User.findById(id);
+      if (!userToFollow) {
+        console.log("User to follow not found");
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      if (userToFollow.followers.includes(req.user._id)) {
+        // Unfollow
+        userToFollow.followers.pull(req.user._id);
+        await userToFollow.save();
+        console.log("User unfollowed successfully");
+        return res.status(200).json({ success: true, message: "Unfollowed successfully" });
+      } else {
+        // Follow
+        userToFollow.followers.push(req.user._id);
+        await userToFollow.save();
+        console.log("User followed successfully");
+        return res.status(200).json({ success: true, message: "Followed successfully" });
+      }
+    } catch (err) {
+      console.error("Error in followOrUnfollow:", err); // Log the error
+      res.status(500).json({ success: false, message: "Server error" });
     }
-}
+  };
+  

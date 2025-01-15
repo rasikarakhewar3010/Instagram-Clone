@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { setPosts, setSelectedPost } from "@/redux/postSlice";
 import { Badge } from "./ui/badge";
+import useFollowUnfollow from "@/hooks/useFollowUnfollow";
 
 
 const Post = ({ post }) => {
