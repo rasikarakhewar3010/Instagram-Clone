@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../Login.css'
 import '../Signup.css'
 import axios from "axios";
@@ -6,49 +6,55 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { useSelector } from "react-redux";
 
 const Signup = () => {
   const [input, setInput] = useState({
-    username:'',
-    email:'',
-    password:''
+    username: '',
+    email: '',
+    password: ''
   });
 
-  const [loading , setLoading]= useState(false);
-  const navigate= useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { user } = useSelector(store => store.auth)
+  const navigate = useNavigate();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  
 
-  const signupHandler = async (e) =>{
+
+  const signupHandler = async (e) => {
     e.preventDefault();
     console.log(input);
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v1/user/register', input ,{
-        headers:{
-          'Content-Type':'application/json'
+      const res = await axios.post('http://localhost:8000/api/v1/user/register', input, {
+        headers: {
+          'Content-Type': 'application/json'
         },
-        withCredentials:true
+        withCredentials: true
       });
-      if(res.data.success){
+      if (res.data.success) {
         navigate("/login")
         toast.success(res.data.message);
         setInput({
-          username:'',
-          email:'',
-          password:''
+          username: '',
+          email: '',
+          password: ''
         });
       }
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-    } finally{
+    } finally {
       setLoading(false);
     }
   }
-
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [])
   return (
     <>
       <div className="flex items-center w-screen h-screen justify-center">
@@ -98,7 +104,7 @@ const Signup = () => {
                   {
                     loading ? (
                       <Button>
-                        <Loader2 className="mr-2 h-4 w-3 w-4 animate-spin"/>
+                        <Loader2 className="mr-2 h-4 w-3 w-4 animate-spin" />
                         Please wait
                       </Button>
                     ) : (
@@ -121,7 +127,7 @@ const Signup = () => {
             </div>
           </div>
 
-          
+
         </div>
       </div>
     </>
